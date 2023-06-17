@@ -8,6 +8,34 @@
   padding: 0 0.5rem;
 }
 
+.board {
+  width: 270px;
+  height: 270px;
+  display: flex;
+  background-color: #999;
+  flex-wrap: wrap;
+  margin: auto;
+}
+
+.cell {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  border: 4px outset #ccc;
+  justify-content: center;
+  align-items: center;
+  background: url('~/assets/images/icons.png') no-repeat;
+}
+
+.rock {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  background: url('~/assets/images/icons.png') no-repeat;
+}
+
 .main {
   display: flex;
   flex: 1;
