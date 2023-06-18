@@ -58,3 +58,32 @@ git commit -m "一旦できたっぽい"
 git push origin main
 npm run dev
 docker-compose -v
+npm run dev
+npm i
+npm run dev
+git add .
+git config --global user.name Sesame-minmin
+git config --global user.email s1b102200969@toyo.jp
+git add .
+git init Initialized empty Git repository in minesweeper/.git/
+git init
+git branch
+master
+git add .]
+git add .
+git commit -m "データよ消えるな"
+git push origin main
+git config --global user.email s1b102200969@toyo.jp
+git config --global user.name Sesame-minmin
+git add .
+git commit -m "データよ消えるな"
+git push origin main
+git push main
+npm run dev
+npm i
+npm run dev
+code .
+ssh -T git@github.com
+code .
+npm i
+npm run dev
