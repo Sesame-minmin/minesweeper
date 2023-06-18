@@ -113,7 +113,7 @@ const Home = () => {
         newBombMap[bombY][bombX] = 1;
       }
     }
-    if (!isFailure) {
+    if (!isFailure && board[y][x] !== 10) {
       newUserInputs[y][x] = 1;
     }
     setBombMap(newBombMap);
@@ -123,10 +123,14 @@ const Home = () => {
     console.log(y, x);
   };
   const onClickr = (x: number, y: number) => {
-    const newUserInputs: (0 | 1 | 2 | 3)[][] = JSON.parse(JSON.stringify(userInputs));
-    newUserInputs[y][x] =
-      userInputs[y][x] === 0 ? 2 : userInputs[y][x] === 2 ? 3 : userInputs[y][x] === 3 ? 0 : 1;
-    setUserInputs(newUserInputs);
+    if (!isFailure) {
+      const newUserInputs: (0 | 1 | 2 | 3)[][] = JSON.parse(JSON.stringify(userInputs));
+      if (board[y][x] < 0 || 8 < board[y][x]) {
+        newUserInputs[y][x] =
+          userInputs[y][x] === 0 ? 2 : userInputs[y][x] === 2 ? 3 : userInputs[y][x] === 3 ? 0 : 1;
+        setUserInputs(newUserInputs);
+      }
+    }
     document.getElementsByTagName('html')[0].oncontextmenu = function () {
       return false;
     };
@@ -150,7 +154,7 @@ const Home = () => {
   console.table(board);
   return (
     <div className={styles.container}>
-      <div className={styles.mainboard}>
+      <div className={styles.mainBoard}>
         <div className={styles.gameboard}>
           <div className={styles.newgame} onClick={() => newGame()} />
         </div>
