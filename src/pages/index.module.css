@@ -8,26 +8,43 @@
   padding: 0 0.5rem;
 }
 
-.board {
-  width: 270px;
-  height: 270px;
+.mainBoard {
+  width: 320px;
+  height: 430px;
   display: flex;
-  background-color: #999;
-  flex-wrap: wrap;
+  background-color: #aaa;
+  flex-flow: column;
+}
+
+.gameboard {
+  width: 275px;
+  height: 100px;
+  display: flex;
+  background-color: #ccc;
   margin: auto;
+  flex-wrap: wrap;
+  border: 3px inset#bbb;
+}
+
+.newgame {
+  width: 70px;
+  height: 70px;
+  margin-top: 10px;
+  margin-left: 105px;
+  background-color: #888;
+}
+
+.board {
+  width: 275px;
+  height: 275px;
+  display: flex;
+  background-color: #ccc;
+  margin: auto;
+  flex-wrap: wrap;
+  border: 3px inset#999;
 }
 
 .cell {
-  display: flex;
-  width: 30px;
-  height: 30px;
-  border: 4px outset #ccc;
-  justify-content: center;
-  align-items: center;
-  background: url('~/assets/images/icons.png') no-repeat;
-}
-
-.rock {
   display: flex;
   width: 30px;
   height: 30px;

@@ -41,7 +41,8 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
-  const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
+  // const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
+  //なくてもできちゃったな
   const isFailure = userInputs.some((row, y) =>
     row.some((input, x) => input === 1 && bombMap[y][x] === 1)
   );
@@ -56,12 +57,52 @@ const Home = () => {
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, 0, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, 2, -1, -1],
-    [-1, -1, -1, -1, -1, -1, 1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
   ];
+  const makeBoard = () => {
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (isFailure) {
+          if (bombMap[j][i] === 1) {
+            board[j][i] = 11;
+          }
+        }
+        if (userInputs[j][i] === 1) {
+          search(i, j);
+        } else if (userInputs[j][i] === 2) {
+          board[j][i] = 10;
+        } else if (userInputs[j][i] === 3) {
+          board[j][i] = 9;
+        }
+      }
+    }
+  };
+  const search = (x: number, y: number) => {
+    if (
+      bombMap[y] !== undefined &&
+      bombMap[y][x] !== undefined &&
+      board[y][x] === -1 &&
+      bombMap[y][x] !== 1
+    ) {
+      let count = 0;
+      for (const d of directions) {
+        if (bombMap[y + d[0]] !== undefined && bombMap[y + d[0]][x + d[1]] === 1) {
+          count += 1;
+        }
+      }
+      board[y][x] = count;
+      if (count === 0) {
+        for (const d of directions) {
+          search(x + d[1], y + d[0]);
+        }
+      }
+    }
+  };
+
   const onClick = (x: number, y: number) => {
     const newBombMap: number[][] = JSON.parse(JSON.stringify(bombMap));
     const newUserInputs: (0 | 1 | 2 | 3)[][] = JSON.parse(JSON.stringify(userInputs));
@@ -72,36 +113,65 @@ const Home = () => {
         newBombMap[bombY][bombX] = 1;
       }
     }
-    newUserInputs[y][x] = 1;
-    board[y][x] = 0;
-    for (const direction of directions) {
-      board[y + direction[0]][x + direction[1]] = 1;
-      if (newBombMap[y + direction[0]][x + direction[1]] === 1) {
-        board[y][x] += 1;
+    if (!isFailure) {
+      newUserInputs[y][x] = 1;
+    }
+    setBombMap(newBombMap);
+    setUserInputs(newUserInputs);
+
+    console.log(bombMap.flat().filter(Boolean).length);
+    console.log(y, x);
+  };
+  const onClickr = (x: number, y: number) => {
+    const newUserInputs: (0 | 1 | 2 | 3)[][] = JSON.parse(JSON.stringify(userInputs));
+    newUserInputs[y][x] =
+      userInputs[y][x] === 0 ? 2 : userInputs[y][x] === 2 ? 3 : userInputs[y][x] === 3 ? 0 : 1;
+    setUserInputs(newUserInputs);
+    document.getElementsByTagName('html')[0].oncontextmenu = function () {
+      return false;
+    };
+  };
+
+  const newGame = () => {
+    const newBombMap: number[][] = JSON.parse(JSON.stringify(bombMap));
+    const newUserInputs: (0 | 1 | 2 | 3)[][] = JSON.parse(JSON.stringify(userInputs));
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        newBombMap[j][i] = 0;
+        newUserInputs[j][i] = 0;
+        board[j][i] = -1;
       }
     }
     setBombMap(newBombMap);
     setUserInputs(newUserInputs);
-    console.table(newBombMap);
-    console.log(bombMap.flat().filter(Boolean).length);
-    console.log(y, x);
   };
+  makeBoard();
+  console.table(bombMap);
+  console.table(board);
   return (
     <div className={styles.container}>
-      <div className={styles.board}>
-        {board.map((row, y) =>
-          row.map((color, x) => (
-            <div
-              className={styles.cell}
-              key={`${x}-${y}`}
-              onClick={() => onClick(x, y)}
-              style={{
-                backgroundPosition: (color - 1) * -30,
-                border: color === -1 ? '4px outset#ccc' : '2px solid #666',
-              }}
-            />
-          ))
-        )}
+      <div className={styles.mainboard}>
+        <div className={styles.gameboard}>
+          <div className={styles.newgame} onClick={() => newGame()} />
+        </div>
+        <div className={styles.board}>
+          {board.map((row, y) =>
+            row.map((color, x) => (
+              <div
+                className={styles.cell}
+                key={`${x}-${y}`}
+                onClick={() => onClick(x, y)}
+                onContextMenu={() => onClickr(x, y)}
+                style={{
+                  border: color === -1 ? '4px outset#aaa' : '1px solid #777',
+
+                  backgroundPosition: (color - 1) * -30,
+                  backgroundColor: bombMap[y][x] === 1 && userInputs[y][x] === 1 ? '#f11' : '#bbb',
+                }}
+              />
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
