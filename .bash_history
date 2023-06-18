@@ -87,3 +87,16 @@ ssh -T git@github.com
 code .
 npm i
 npm run dev
+.cd
+cd
+minesweeper
+/minesweeper
+git config --global user.email s1b102200969@toyo.jp
+git config --global user.name Sesame-minmin
+git add .
+git commit -m "データよ消えるな"
+git push origin main
+git push orijin HEAD:main
+git push origin HEAD:main
+git remote -v
+git remote add origin https://github@Sesame-minmin
