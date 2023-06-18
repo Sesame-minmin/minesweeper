@@ -154,7 +154,7 @@ const Home = () => {
   console.table(board);
   return (
     <div className={styles.container}>
-      <div className={styles.mainBoard}>
+      <div className={styles.mainboard}>
         <div className={styles.gameboard}>
           <div className={styles.newgame} onClick={() => newGame()} />
         </div>
