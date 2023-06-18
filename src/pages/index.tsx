@@ -46,6 +46,8 @@ const Home = () => {
   const isFailure = userInputs.some((row, y) =>
     row.some((input, x) => input === 1 && bombMap[y][x] === 1)
   );
+//const[timer,setTimer]=({statedTime:0,curruentTime:0,});
+//const displayTime = Math.floow((timer.currentTime - timer.startedTime) / 1000)
   // -1 -> 石
   // 0 -> 画像なしセル
   // 1~8 -> 数字セル
@@ -63,6 +65,8 @@ const Home = () => {
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
   ];
+
+
   const makeBoard = () => {
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
@@ -156,7 +160,12 @@ const Home = () => {
     <div className={styles.container}>
       <div className={styles.mainboard}>
         <div className={styles.gameboard}>
+          <div className={styles.bombboard}>
+            <div className={styles.timetop}/>
+            <div className={styles.timebottom}/>
+          </div>
           <div className={styles.newgame} onClick={() => newGame()} />
+          <div className={styles.timeboard}/>
         </div>
         <div className={styles.board}>
           {board.map((row, y) =>
