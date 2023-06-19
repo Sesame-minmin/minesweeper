@@ -100,3 +100,60 @@ git push orijin HEAD:main
 git push origin HEAD:main
 git remote -v
 git remote add origin https://github@Sesame-minmin
+git remote add origin git@github.com:Sesame-minmin/minesweeper.git
+git remote rm origin
+git remote add origin git@github.com:Sesame-minmin/minesweeper.git
+git commit -m "データよ消えるな"
+git push -u origin master
+git add .
+git commit -m "データよ消えるな"
+git push origin main
+git branch
+git push origin master
+git push origin HEAD:main
+git init
+git add.
+git add .
+git commit -m "頼むからプッシュされてくれ"
+git remote add origin git@github.com:Sesame-minmin/minesweeper.git
+git remote -v
+ssh-keygen -t rsa -c hoge@s1b102200969@toyo.jp
+npm run dev
+npm --help start
+npm start
+bpn ibit
+npm init
+npm -v
+npm run dev
+npm init
+npm -v
+npm run dev
+node -v
+npm -v
+n --stable
+node --stable
+npm run build
+npm i
+rm -rf node_modules
+rm package-lock.json yarn.lock
+npm cache clear --force
+npm install
+npm install -g npm
+rm -rf node_modules
+npm install
+npm run dev
+cd minesweeper
+npm run dev
+npm add .
+npm commit -m "これはいけたのでは？？？"
+git add .
+git commit -m "これはいけたのでは？"
+git push origin main
+npm run dev
+git add .
+git commit -m "はいはい更新更新"
+git push origin main
+npm run dev
+git add .
+git commit -m "あとは時計実装"
+git push origin main
