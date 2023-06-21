@@ -41,13 +41,33 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
-  // const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
-  //なくてもできちゃったな
+  const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
   const isFailure = userInputs.some((row, y) =>
     row.some((input, x) => input === 1 && bombMap[y][x] === 1)
   );
+
+
+  const gameJudge=()=>{
+    if(isPlaying){
+      let judge=0
+      for (let i = 0;i<9;i++){
+        for (let j = 0;j<9;j++){
+          if(bombMap[j][i]===1&&userInputs[j][i]===3){
+           judge+=1;
+          }
+        }
+      }
+      if(judge===bombMap.flat().filter(Boolean).length){
+        return true;
+      }
+    }
+    return false;
+  }
+
 //const[timer,setTimer]=({statedTime:0,curruentTime:0,});
 //const displayTime = Math.floow((timer.currentTime - timer.startedTime) / 1000)
+
+
   // -1 -> 石
   // 0 -> 画像なしセル
   // 1~8 -> 数字セル
@@ -107,8 +127,8 @@ const Home = () => {
     }
   };
 
-  const onClick = (x: number, y: number) => {
-    const newBombMap: number[][] = JSON.parse(JSON.stringify(bombMap));
+  const onClick = (x: number, y: number) => {//左クリックの挙動
+    const newBombMap: number[][] = JSON.parse(JSON.stringify(bombMap));//ボムの数が規定に達するまでボムを生成
     const newUserInputs: (0 | 1 | 2 | 3)[][] = JSON.parse(JSON.stringify(userInputs));
     while (newBombMap.flat().filter(Boolean).length < bombCount) {
       const bombY = Math.floor(Math.random() * 9);
@@ -117,7 +137,7 @@ const Home = () => {
         newBombMap[bombY][bombX] = 1;
       }
     }
-    if (!isFailure && board[y][x] !== 10) {
+    if (!isFailure && board[y][x] !== 10) {//ボムが規定数かつ、旗を立てていない場所をクリックした場合。
       newUserInputs[y][x] = 1;
     }
     setBombMap(newBombMap);
@@ -126,7 +146,9 @@ const Home = () => {
     console.log(bombMap.flat().filter(Boolean).length);
     console.log(y, x);
   };
-  const onClickr = (x: number, y: number) => {
+
+
+  const onClickr = (x: number, y: number) => {//右クリックの挙動
     if (!isFailure) {
       const newUserInputs: (0 | 1 | 2 | 3)[][] = JSON.parse(JSON.stringify(userInputs));
       if (board[y][x] < 0 || 8 < board[y][x]) {
@@ -140,7 +162,7 @@ const Home = () => {
     };
   };
 
-  const newGame = () => {
+  const newGame = () => {//盤面のリセット
     const newBombMap: number[][] = JSON.parse(JSON.stringify(bombMap));
     const newUserInputs: (0 | 1 | 2 | 3)[][] = JSON.parse(JSON.stringify(userInputs));
     for (let i = 0; i < 9; i++) {
@@ -153,18 +175,21 @@ const Home = () => {
     setBombMap(newBombMap);
     setUserInputs(newUserInputs);
   };
+
   makeBoard();
-  console.table(bombMap);
-  console.table(board);
+  
   return (
     <div className={styles.container}>
       <div className={styles.mainboard}>
         <div className={styles.gameboard}>
           <div className={styles.bombboard}>
+            <div className={styles.timetop}/><div className={styles.timebottom}/>
+            <div className={styles.timetop}/><div className={styles.timebottom}/>
             <div className={styles.timetop}/>
             <div className={styles.timebottom}/>
           </div>
-          <div className={styles.newgame} onClick={() => newGame()} />
+          <div className={styles.newgame} onClick={() => newGame()} 
+          style={{backgroundPosition:gameJudge()?-360:isFailure?-390:-330}} />
           <div className={styles.timeboard}/>
         </div>
         <div className={styles.board}>
