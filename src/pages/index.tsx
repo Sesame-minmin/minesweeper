@@ -185,12 +185,15 @@ const Home = () => {
           <div className={styles.bombboard}>
             <div className={styles.timetop}/><div className={styles.timebottom}/>
             <div className={styles.timetop}/><div className={styles.timebottom}/>
-            <div className={styles.timetop}/>
-            <div className={styles.timebottom}/>
+            <div className={styles.timetop} style={{marginRight:"2px"}}/><div className={styles.timebottom} style={{marginRight:"2px"}}/>
           </div>
           <div className={styles.newgame} onClick={() => newGame()} 
           style={{backgroundPosition:gameJudge()?-360:isFailure?-390:-330}} />
-          <div className={styles.timeboard}/>
+          <div className={styles.timeboard}>
+            <div className={styles.timetop}/><div className={styles.timebottom}/>
+            <div className={styles.timetop}/><div className={styles.timebottom}/>
+            <div className={styles.timetop} style={{marginRight:"2px"}}/><div className={styles.timebottom} style={{marginRight:"2px"}}/>
+          </div>
         </div>
         <div className={styles.board}>
           {board.map((row, y) =>
