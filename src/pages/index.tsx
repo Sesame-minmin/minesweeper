@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import styles from 'index.module.css';
+import { useState } from 'react';
 
 const Home = () => {
   // 0-> 未クリック
@@ -47,28 +47,26 @@ const Home = () => {
     row.some((input, x) => input === 1 && bombMap[y][x] === 1)
   );
 
-
-  const gameJudge=()=>{
-    let judge=0
-    if(isPlaying){
-      for (let i = 0;i<9;i++){
-        for (let j = 0;j<9;j++){
-          if(bombMap[j][i]===1&&userInputs[j][i]===3){
-           judge++;
+  const gameJudge = () => {
+    let judge = 0;
+    if (isPlaying) {
+      for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+          if (bombMap[j][i] === 1 && userInputs[j][i] === 3) {
+            judge++;
           }
         }
       }
-      if(judge === bombCount){
+      if (judge === bombCount) {
         return true;
       }
     }
-    console.log(judge)
+    console.log(judge);
     return false;
-  }
+  };
 
-//const[timer,setTimer]=({statedTime:0,curruentTime:0,});
-//const displayTime = Math.floow((timer.currentTime - timer.startedTime) / 1000)
-
+  //const[timer,setTimer]=({statedTime:0,curruentTime:0,});
+  //const displayTime = Math.floow((timer.currentTime - timer.startedTime) / 1000)
 
   // -1 -> 石
   // 0 -> 画像なしセル
@@ -88,21 +86,18 @@ const Home = () => {
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
   ];
 
-  const lightNumber:number[][]=[
-    [3,3,0,3,0,3,3,3],
-    [0,3,0,0,0,3,0,0],
-    [3,3,2,0,2,0,3,3],
-    [3,0,3,2,2,0,3,3],
-    [0,3,3,2,2,0,0,3],
-    [3,3,2,0,2,3,3,3],
-    [3,3,2,0,2,3,3,0],
-    [3,0,0,3,0,0,0,3],
-    [3,3,2,3,2,3,3,3],
-    [3,3,3,2,2,3,3,0]
-
-  ]
-
-
+  const lightNumber: number[][] = [
+    [3, 3, 0, 3, 0, 3, 3, 3],
+    [0, 3, 0, 0, 0, 3, 0, 0],
+    [3, 3, 2, 0, 2, 0, 3, 3],
+    [3, 0, 3, 2, 2, 0, 3, 3],
+    [0, 3, 3, 2, 2, 0, 0, 3],
+    [3, 3, 2, 0, 2, 3, 3, 3],
+    [3, 3, 2, 0, 2, 3, 3, 0],
+    [3, 0, 0, 3, 0, 0, 0, 3],
+    [3, 3, 2, 3, 2, 3, 3, 3],
+    [3, 3, 3, 2, 2, 3, 3, 0],
+  ];
 
   const makeBoard = () => {
     for (let i = 0; i < 9; i++) {
@@ -144,8 +139,9 @@ const Home = () => {
     }
   };
 
-  const onClick = (x: number, y: number) => {//左クリックの挙動
-    const newBombMap: number[][] = JSON.parse(JSON.stringify(bombMap));//ボムの数が規定に達するまでボムを生成
+  const onClick = (x: number, y: number) => {
+    //左クリックの挙動
+    const newBombMap: number[][] = JSON.parse(JSON.stringify(bombMap)); //ボムの数が規定に達するまでボムを生成
     const newUserInputs: (0 | 1 | 2 | 3)[][] = JSON.parse(JSON.stringify(userInputs));
     while (newBombMap.flat().filter(Boolean).length < bombCount) {
       const bombY = Math.floor(Math.random() * 9);
@@ -154,7 +150,8 @@ const Home = () => {
         newBombMap[bombY][bombX] = 1;
       }
     }
-    if (!isFailure &&!gameJudge()&& board[y][x] !== 10) {//負けていないかつ、勝っていないかつ、旗を立てていない場所をクリックした場合。
+    if (!isFailure && !gameJudge() && board[y][x] !== 10) {
+      //負けていないかつ、勝っていないかつ、旗を立てていない場所をクリックした場合。
       newUserInputs[y][x] = 1;
     }
     setBombMap(newBombMap);
@@ -164,8 +161,8 @@ const Home = () => {
     console.log(y, x);
   };
 
-
-  const onClickr = (x: number, y: number) => {//右クリックの挙動
+  const onClickr = (x: number, y: number) => {
+    //右クリックの挙動
     if (!isFailure) {
       const newUserInputs: (0 | 1 | 2 | 3)[][] = JSON.parse(JSON.stringify(userInputs));
       if (board[y][x] < 0 || 8 < board[y][x]) {
@@ -179,7 +176,8 @@ const Home = () => {
     };
   };
 
-  const newGame = () => {//盤面のリセット
+  const newGame = () => {
+    //盤面のリセット
     const newBombMap: number[][] = JSON.parse(JSON.stringify(bombMap));
     const newUserInputs: (0 | 1 | 2 | 3)[][] = JSON.parse(JSON.stringify(userInputs));
     for (let i = 0; i < 9; i++) {
@@ -195,22 +193,31 @@ const Home = () => {
 
   makeBoard();
   console.log(gameJudge());
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.mainboard}>
         <div className={styles.gameboard}>
           <div className={styles.bombboard}>
-            <div className={styles.timetop}/><div className={styles.timebottom}/>
-            <div className={styles.timetop}/><div className={styles.timebottom}/>
-            <div className={styles.timetop} style={{marginRight:"2px"}}/><div className={styles.timebottom} style={{marginRight:"2px"}}/>
+            <div className={styles.timetop} />
+            <div className={styles.timebottom} />
+            <div className={styles.timetop} />
+            <div className={styles.timebottom} />
+            <div className={styles.timetop} style={{ marginRight: '2px' }} />
+            <div className={styles.timebottom} style={{ marginRight: '2px' }} />
           </div>
-          <div className={styles.newgame} onClick={() => newGame()} 
-          style={{backgroundPosition:isFailure?-390:gameJudge()?-360:-330}} />
+          <div
+            className={styles.newgame}
+            onClick={() => newGame()}
+            style={{ backgroundPosition: isFailure ? -390 : gameJudge() ? -360 : -330 }}
+          />
           <div className={styles.timeboard}>
-            <div className={styles.timetop}/><div className={styles.timebottom}/>
-            <div className={styles.timetop}/><div className={styles.timebottom}/>
-            <div className={styles.timetop} style={{marginRight:"2px"}}/><div className={styles.timebottom} style={{marginRight:"2px"}}/>
+            <div className={styles.timetop} />
+            <div className={styles.timebottom} />
+            <div className={styles.timetop} />
+            <div className={styles.timebottom} />
+            <div className={styles.timetop} style={{ marginRight: '2px' }} />
+            <div className={styles.timebottom} style={{ marginRight: '2px' }} />
           </div>
         </div>
         <div className={styles.board}>
@@ -223,8 +230,15 @@ const Home = () => {
                 onContextMenu={() => onClickr(x, y)}
                 style={{
                   backgroundPosition: (color - 1) * -30,
-                  border: color === -1 ? '4px outset#aaa' :color===9? '4px outset#aaa':color===10?'4px outset#aaa' :'1px solid #777',
-                  
+                  border:
+                    color === -1
+                      ? '4px outset#aaa'
+                      : color === 9
+                      ? '4px outset#aaa'
+                      : color === 10
+                      ? '4px outset#aaa'
+                      : '1px solid #777',
+
                   backgroundColor: bombMap[y][x] === 1 && userInputs[y][x] === 1 ? '#f11' : '#bbb',
                 }}
               />
