@@ -1,4 +1,4 @@
-import styles from 'index.module.css';
+import styles from './index.module.css'
 import { useState } from 'react';
 
 const Home = () => {
@@ -96,7 +96,7 @@ const Home = () => {
     [3, 3, 2, 0, 2, 3, 3, 0],
     [3, 0, 0, 3, 0, 0, 0, 3],
     [3, 3, 2, 3, 2, 3, 3, 3],
-    [3, 3, 3, 2, 2, 3, 3, 0],
+    [3, 3, 3, 2, 2, 3, 2, 0],
   ];
 
   const makeBoard = () => {
