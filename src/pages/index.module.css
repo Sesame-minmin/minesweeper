@@ -8,44 +8,44 @@
   padding: 0 0.5rem;
 }
 
-.mainboard { /* 一番後ろのボード */
-  width: 315px;
-  height: 365px;
+.mainboard {
+  /* 一番後ろのボード */
+  width: 350px;
+  height: 400px;
   display: flex;
   background-color: #aaa;
   flex-flow: column;
   border: 5px outset #bbb;
 }
 
-
-
-.timetop{ /* 七セグの上部分 */
+.timetop {
+  /* 七セグの上部分 */
   width: 12px;
-  height:12px;
-  border-top: 3px solid#f00; 
-  border-bottom:2px solid#f00;
+  height: 12px;
+  border: solid#f00;
+  border-width: 3px 0 2px 3px;
+  margin-left: 2px;
+  margin-top: 1px;
+}
+
+.timebottom {
+  /* 七セグの下部分 */
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid#f00;
+  border-bottom: 3px solid#f00;
   border-left: 3px solid #f00;
   border-right: 3px solid #f00;
   margin-left: 2px;
-  margin-top:1px;
+  margin-bottom: 1px;
 }
 
-.timebottom{ /* 七セグの下部分 */
-  width:12px;
-  height:12px;
-  border-top: 2px solid#f00; 
-  border-bottom:3px solid#f00;
-  border-left: 3px solid #f00;
-  border-right: 3px solid #f00;
-  margin-left: 2px;
-  margin-bottom:1px;
-}
-
-.bombboard{ /* 残り爆弾の個数 */
+.bombboard {
+  /* 残り爆弾の個数 */
   width: 50px;
   height: 30px;
-  margin-top :5px;
-  margin-left:5px;
+  margin-top: 5px;
+  margin-left: 5px;
   align-items: center;
   justify-content: center;
   display: flex;
@@ -54,11 +54,12 @@
   background-color: #888;
 }
 
-.timeboard{ /* 経過時間を表示する */
+.timeboard {
+  /* 経過時間を表示する */
   width: 50px;
   height: 30px;
-  margin-top :5px;
-  margin-right:5px;
+  margin-top: 5px;
+  margin-right: 5px;
   align-items: center;
   justify-content: center;
   display: flex;
@@ -67,8 +68,9 @@
   background-color: #888;
 }
 
-.gameboard { /* 時間やリセットボタンを配置する */
-  width: 280px;
+.gameboard {
+  /* 時間やリセットボタンを配置する */
+  width: 316px;
   height: 50px;
   display: flex;
   background-color: #ccc;
@@ -77,18 +79,20 @@
   border: 5px inset#bbb;
 }
 
-.newgame { /* リセットボタン */
+.newgame {
+  /* リセットボタン */
   width: 30px;
   height: 30px;
-  margin:auto;
+  margin: auto;
   margin-top: 5px;
   background: url('~/assets/images/icons.png') no-repeat;
   background-color: #888;
 }
 
-.board { /* ゲーム画面 */
-  width: 280px;
-  height: 280px;
+.board {
+  /* ゲーム画面 */
+  width: 316px;
+  height: 316px;
   display: flex;
   background-color: #ccc;
   margin: auto;
@@ -96,12 +100,13 @@
   border: 5px inset#999;
 }
 
-.cell { /* 岩 */
-  display: flex;
-  width: 30px;
-  height: 30px;
+.cell {
+  /* 岩 */
+  width: 34px;
+  height: 34px;
   justify-content: center;
   align-items: center;
+  display: flex;
   background: url('~/assets/images/icons.png') no-repeat;
 }
 

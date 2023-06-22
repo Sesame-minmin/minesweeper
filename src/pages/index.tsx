@@ -41,6 +41,7 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
+
   const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
   const isFailure = userInputs.some((row, y) =>
     row.some((input, x) => input === 1 && bombMap[y][x] === 1)
@@ -48,19 +49,20 @@ const Home = () => {
 
 
   const gameJudge=()=>{
+    let judge=0
     if(isPlaying){
-      let judge=0
       for (let i = 0;i<9;i++){
         for (let j = 0;j<9;j++){
           if(bombMap[j][i]===1&&userInputs[j][i]===3){
-           judge+=1;
+           judge++;
           }
         }
       }
-      if(judge===bombMap.flat().filter(Boolean).length){
+      if(judge === bombCount){
         return true;
       }
     }
+    console.log(judge)
     return false;
   }
 
@@ -86,6 +88,21 @@ const Home = () => {
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
   ];
 
+  const lightNumber:number[][]=[
+    [3,3,0,3,0,3,3,3],
+    [0,3,0,0,0,3,0,0],
+    [3,3,2,0,2,0,3,3],
+    [3,0,3,2,2,0,3,3],
+    [0,3,3,2,2,0,0,3],
+    [3,3,2,0,2,3,3,3],
+    [3,3,2,0,2,3,3,0],
+    [3,0,0,3,0,0,0,3],
+    [3,3,2,3,2,3,3,3],
+    [3,3,3,2,2,3,3,0]
+
+  ]
+
+
 
   const makeBoard = () => {
     for (let i = 0; i < 9; i++) {
@@ -98,9 +115,9 @@ const Home = () => {
         if (userInputs[j][i] === 1) {
           search(i, j);
         } else if (userInputs[j][i] === 2) {
-          board[j][i] = 10;
-        } else if (userInputs[j][i] === 3) {
           board[j][i] = 9;
+        } else if (userInputs[j][i] === 3) {
+          board[j][i] = 10;
         }
       }
     }
@@ -137,7 +154,7 @@ const Home = () => {
         newBombMap[bombY][bombX] = 1;
       }
     }
-    if (!isFailure && board[y][x] !== 10) {//ボムが規定数かつ、旗を立てていない場所をクリックした場合。
+    if (!isFailure &&!gameJudge()&& board[y][x] !== 10) {//負けていないかつ、勝っていないかつ、旗を立てていない場所をクリックした場合。
       newUserInputs[y][x] = 1;
     }
     setBombMap(newBombMap);
@@ -153,7 +170,7 @@ const Home = () => {
       const newUserInputs: (0 | 1 | 2 | 3)[][] = JSON.parse(JSON.stringify(userInputs));
       if (board[y][x] < 0 || 8 < board[y][x]) {
         newUserInputs[y][x] =
-          userInputs[y][x] === 0 ? 2 : userInputs[y][x] === 2 ? 3 : userInputs[y][x] === 3 ? 0 : 1;
+          userInputs[y][x] === 0 ? 3 : userInputs[y][x] === 3 ? 2 : userInputs[y][x] === 2 ? 0 : 1;
         setUserInputs(newUserInputs);
       }
     }
@@ -177,6 +194,7 @@ const Home = () => {
   };
 
   makeBoard();
+  console.log(gameJudge());
   
   return (
     <div className={styles.container}>
@@ -188,7 +206,7 @@ const Home = () => {
             <div className={styles.timetop} style={{marginRight:"2px"}}/><div className={styles.timebottom} style={{marginRight:"2px"}}/>
           </div>
           <div className={styles.newgame} onClick={() => newGame()} 
-          style={{backgroundPosition:gameJudge()?-360:isFailure?-390:-330}} />
+          style={{backgroundPosition:isFailure?-390:gameJudge()?-360:-330}} />
           <div className={styles.timeboard}>
             <div className={styles.timetop}/><div className={styles.timebottom}/>
             <div className={styles.timetop}/><div className={styles.timebottom}/>
@@ -204,9 +222,9 @@ const Home = () => {
                 onClick={() => onClick(x, y)}
                 onContextMenu={() => onClickr(x, y)}
                 style={{
-                  border: color === -1 ? '4px outset#aaa' : '1px solid #777',
-
                   backgroundPosition: (color - 1) * -30,
+                  border: color === -1 ? '4px outset#aaa' :color===9? '4px outset#aaa':color===10?'4px outset#aaa' :'1px solid #777',
+                  
                   backgroundColor: bombMap[y][x] === 1 && userInputs[y][x] === 1 ? '#f11' : '#bbb',
                 }}
               />
